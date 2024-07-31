@@ -2,6 +2,7 @@
 let database = {
   users: {},
   articles: {},
+  comments: {},
   nextArticleId: 1
 };
 
@@ -26,6 +27,19 @@ const routes = {
   },
   '/articles/:id/downvote': {
     'PUT': downvoteArticle
+  },
+  '/comments': {
+    'POST': createComment
+  },
+  '/comments/:id': {
+    'PUT': updateComment,
+    'DELETE': deleteCommend
+  },
+  '/comments/:id/upvote': {
+    'PUT': upvoteComment
+  },
+  '/comments/:id/downvote': {
+    'PUT': downvoteComment
   }
 };
 
