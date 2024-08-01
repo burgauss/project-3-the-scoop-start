@@ -3,8 +3,10 @@ let database = {
   users: {},
   articles: {},
   comments: {},
-  nextArticleId: 1
+  nextArticleId: 1,
+  nextCommentId:1
 };
+
 
 const routes = {
   '/users': {
@@ -28,6 +30,11 @@ const routes = {
   '/articles/:id/downvote': {
     'PUT': downvoteArticle
   },
+  
+  // Receives comment information from comment property of request body
+  // Creates new comment and adds it to database, returns a 201 response with comment on comment property of response body
+  // If body isn’t supplied, user with supplied username doesn’t exist, or article with supplied article ID doesn’t exist, returns a 400 response
+
   '/comments': {
     'POST': createComment
   },
@@ -252,6 +259,33 @@ function downvote(item, username) {
     item.downvotedBy.push(username);
   }
   return item;
+}
+
+function createComment(url, request){
+  const requestComment = request.body && request.body.comment;
+  const response = {};
+
+  if (requestComment && requestComment.body &&
+      requestComment.username && database.users[requestComment.username]) {
+    const comment = {
+      id: database.nextCommentId++,
+      body: requestComment.body,
+      username: requestComment.username,
+      articleId: requestComment.id,
+      upvotedBy: [],
+      downvotedBy: []
+    };
+
+    database.articles[article.id] = article;
+    database.users[article.username].articleIds.push(article.id);
+
+  //   response.body = {article: article};
+  //   response.status = 201;
+  // } else {
+  //   response.status = 400;
+  // }
+
+  // return response;
 }
 
 // Write all code above this line.
