@@ -154,7 +154,10 @@ function createArticle(url, request) {
 
     database.articles[article.id] = article;
     database.users[article.username].articleIds.push(article.id);
-
+    console.log("article:");
+    console.log(article);
+    console.log("database users:");
+    console.log(database.users);
     response.body = {article: article};
     response.status = 201;
   } else {
@@ -265,6 +268,8 @@ function downvote(item, username) {
 }
 
 function createComment(url, request){
+  console.log("request body: ");
+  console.log(request.body);
   const requestComment = request.body && request.body.comment;
   const response = {};
 
@@ -274,14 +279,15 @@ function createComment(url, request){
       id: database.nextCommentId++,
       body: requestComment.body,
       username: requestComment.username,
-      articleId: requestComment.id,
+      articleId: requestComment.articleId,
       upvotedBy: [],
       downvotedBy: []
     };
 
-    database.com[comment.id] = comment;
-    database.users[comment.username].articleIds.push(comment.id);
-
+    database.comments[comment.id] = comment;
+    console.log(comment);
+    database.users[comment.username].commentIds.push(comment.id);
+    console.log(database.users);
     response.body = {comment: comment};
     response.status = 201;
   } else {
