@@ -279,16 +279,16 @@ function createComment(url, request){
       downvotedBy: []
     };
 
-    database.articles[article.id] = article;
-    database.users[article.username].articleIds.push(article.id);
+    database.com[comment.id] = comment;
+    database.users[comment.username].articleIds.push(comment.id);
 
-  //   response.body = {article: article};
-  //   response.status = 201;
-  // } else {
-  //   response.status = 400;
-  // }
+    response.body = {comment: comment};
+    response.status = 201;
+  } else {
+    response.status = 400;
+  }
 
-  // return response;
+  return response;
 }
 
 // Write all code above this line.
