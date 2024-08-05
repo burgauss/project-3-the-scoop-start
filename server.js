@@ -288,6 +288,8 @@ function createComment(url, request){
     console.log(comment);
     database.users[comment.username].commentIds.push(comment.id);
     console.log(database.users);
+    //pushing comment id to the article
+    database.articles[comment.articleId].commentIds.push(comment.id);
     response.body = {comment: comment};
     response.status = 201;
   } else {
