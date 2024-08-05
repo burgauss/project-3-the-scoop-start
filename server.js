@@ -4,9 +4,12 @@ let database = {
   articles: {},
   comments: {},
   nextArticleId: 1,
-  nextCommentId:1
+  nextCommentId: 1
 };
 
+// let articles = {
+//   nextCommentId: 1
+// }
 
 const routes = {
   '/users': {
@@ -38,16 +41,16 @@ const routes = {
   '/comments': {
     'POST': createComment
   },
-  '/comments/:id': {
-    'PUT': updateComment,
-    'DELETE': deleteCommend
-  },
-  '/comments/:id/upvote': {
-    'PUT': upvoteComment
-  },
-  '/comments/:id/downvote': {
-    'PUT': downvoteComment
-  }
+  // '/comments/:id': {
+  //   'PUT': updateComment,
+  //   'DELETE': deleteCommend
+  // },
+  // '/comments/:id/upvote': {
+  //   'PUT': upvoteComment
+  // },
+  // '/comments/:id/downvote': {
+  //   'PUT': downvoteComment
+  // }
 };
 
 function getUser(url, request) {
