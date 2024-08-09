@@ -1,3 +1,6 @@
+const fs = require('fs');
+const YAML = require('json-to-pretty-yaml');
+
 // database is let instead of const to allow us to modify it in test.js
 let database = {
   users: {},
@@ -268,8 +271,8 @@ function downvote(item, username) {
 }
 
 function createComment(url, request){
-  console.log("request body: ");
-  console.log(request.body);
+  // console.log("request body: ");
+  // console.log(request.body);
   const requestComment = request.body && request.body.comment;
   const response = {};
 
@@ -304,8 +307,8 @@ function updateComment(url, request)
   const id = Number(url.split('/').filter(segment => segment)[1]); 
   const savedComment = database.comments[id];
   const requestComment = request.body && request.body.comment;
-  console.log("request comment;");
-  console.log(requestComment);
+  // console.log("request comment;");
+  // console.log(requestComment);
   const response = {};
 
   if (!id || !requestComment){
@@ -317,8 +320,8 @@ function updateComment(url, request)
   {
     savedComment.body = requestComment.body || savedComment.body;
     response.body = {comment: savedComment};
-    console.log("reponse body:");
-    console.log(response.body);
+    // console.log("reponse body:");
+    // console.log(response.body);
     response.status = 200;
   }
 
@@ -329,8 +332,8 @@ function deleteComment(url, request){
   const id = Number(url.split('/').filter(segment => segment)[1]);
   const savedComment = database.comments[id];
   const response = {};
-  console.log("database articles commentIds");
-  console.log(database.articles[savedComment.articleId].commentIds);
+  // console.log("database articles commentIds");
+  // console.log(database.articles[savedComment.articleId].commentIds);
 
   if (savedComment)
   {
@@ -389,6 +392,38 @@ function downvoteComment(url, request)
 
   return response;
 }
+
+function loadDatabase(){
+
+}
+
+function saveDatabase(){
+  // console.log("I am being called SAVE DATABASE"
+  // let jsonObject = {
+  //   "users": {
+  //     "bur1": {
+  //       "username": "bur1",
+  //       "articleIds":[],
+  //       "commentsIds": []
+  //     }
+  //   },
+  //   "articles": {},
+  //   "comments":{},
+  //   "nextArticleId":1
+  // }
+
+
+  let databaseJSON = JSON.stringify(database,null,1);
+  let databaseYAML = YAML.stringify(database);
+  // console.log(databaseJSON);
+
+  fs.writeFileSync('database.yaml', databaseYAML);
+  fs.writeFileSync('database.json', databaseJSON);
+}
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 // Write all code above this line.
 
 const http = require('http');
