@@ -1,5 +1,6 @@
 const fs = require('fs');
 const YAML = require('json-to-pretty-yaml');
+const js_yaml = require('js-yaml');
 
 // database is let instead of const to allow us to modify it in test.js
 let database = {
@@ -394,24 +395,13 @@ function downvoteComment(url, request)
 }
 
 function loadDatabase(){
+  console.log("LOAD DATABASE IS BEING CALLED");
+  const data = fs.readFileSync('database.yaml');
+  database = js_yaml.load(data);
 
 }
 
 function saveDatabase(){
-  // console.log("I am being called SAVE DATABASE"
-  // let jsonObject = {
-  //   "users": {
-  //     "bur1": {
-  //       "username": "bur1",
-  //       "articleIds":[],
-  //       "commentsIds": []
-  //     }
-  //   },
-  //   "articles": {},
-  //   "comments":{},
-  //   "nextArticleId":1
-  // }
-
 
   let databaseJSON = JSON.stringify(database,null,1);
   let databaseYAML = YAML.stringify(database);
