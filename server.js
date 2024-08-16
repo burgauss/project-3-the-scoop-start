@@ -277,8 +277,9 @@ function createComment(url, request){
   const requestComment = request.body && request.body.comment;
   const response = {};
 
-  if (requestComment && requestComment.body &&
-      requestComment.username && database.users[requestComment.username]) {
+  if (requestComment && requestComment.body && requestComment.articleId &&
+      requestComment.username && database.articles[requestComment.articleId] &&
+      database.users[requestComment.username]) {
     const comment = {
       id: database.nextCommentId++,
       body: requestComment.body,
@@ -384,8 +385,7 @@ function downvoteComment(url, request)
 
   if (savedComment && database.users[username]) {
     savedComment = downvote(savedComment, username);
-
-    response.body = {article: savedComment};
+    response.body = {comment: savedComment};
     response.status = 200;
   } else {
     response.status = 400;
